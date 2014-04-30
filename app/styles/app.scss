@@ -1,0 +1,393 @@
+// @import 'flexy.css';
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import '../vendor/bootstrap/dist/css/bootstrap.min.css';
+@import '../vendor/fontawesome/css/font-awesome.min.css';
+
+
+// PFBASE OVERRIDES
+ul, ol {
+	margin: 0;
+}
+
+
+// BOOTSTRAP OVERRIDES
+.dropdown-menu {
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
+}
+
+
+
+// VARIABLS
+$grey_1: #999;
+$grey_2: #333;
+$blue_1: #0EA3F2;
+$banner_padding: 15px;
+$banner_color: #ddd;
+
+
+
+// FLEXY MAMA
+.flexed {
+	flex: 1;
+}
+
+.flex-row,
+.flex-column {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.flex-row-centered {
+	@extend .flex-row;
+	justify-content: center;
+}
+
+.flex-row-end {
+	@extend .flex-row;
+	justify-content: flex-end;
+}
+
+
+
+// APP LAYOUT
+#App {
+	@extend .flex-row;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	#MainNav {
+		width: 80px;
+		background: black;
+
+		@media (max-width:767px) {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: -65px;
+		}
+	}
+
+	#MainNav:after {
+		content:'';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 80px;
+		z-index: 100;
+		box-shadow: 0 0 10px rgba(0,0,0,.8) !important;
+		pointer-events: none;
+	}
+
+	#MainContent {
+		@extend .flexed;
+		@extend .flex-column;
+
+		@media (max-width:767px) {
+			margin-left: 15px;
+		}
+
+		#Content {
+			@extend .flexed;
+		}
+
+		#BannerBottom {
+			@extend .flex-row-centered;
+			display: none;
+
+			padding: $banner_padding;
+			border-top: 1px solid #ccc;
+
+			@media (min-width:767px) and (max-width:991px) {
+				display: flex;
+			}
+
+			.banner {
+				width: 730px;
+				height: 90px;
+				background: $banner_color;
+			}
+		}
+	}
+
+	#BannerRight {
+		@extend .flex-row-centered;
+		display: none;
+
+		padding: $banner_padding;
+		border-left: 1px solid #ccc;
+
+		@media (min-width:991px) {
+			display: flex;
+		}
+
+		.banner_small {
+			display: none;
+			width: 160px;
+			height: 600px;
+			background: $banner_color;
+
+			@media (min-width:991px) and (max-width:1200px) {
+				display: block;
+			}
+		}
+
+		.banner_large {
+			display: none;
+			width: 300px;
+			height: 600px;
+			background: $banner_color;
+
+			@media (min-width:1200px) {
+				display: block;
+			}
+		}
+	}
+}
+
+
+
+
+html, body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 200;
+	margin: 0;
+}
+
+a, a:hover {
+	text-decoration: none;
+}
+
+table {
+	width: 100%;
+}
+
+
+
+
+// MAIN NAV
+@mixin mainNavText {
+	display: block;
+	padding: 8px 0;
+	font-size: 11px;
+	font-weight: 300;
+}
+@mixin utilityNavButton {
+	display: block;
+	height: 30px;
+	padding: 6px 20px;
+	font-size: 12px;
+	font-weight: 300;
+	color: $grey_1;
+	text-align: center;
+	border-radius: 0;
+	background-color: rgba(0,0,0,0);
+
+	&:hover {
+		color: white;
+	}
+}
+
+
+#MainNav {
+
+	#MainNavCarbon {
+
+		.nav-stacked>li+li {
+			margin: 0;
+		}
+
+		.nav-pills>li {
+			a {
+				@include mainNavText;
+				height: 56px;
+				opacity: .5;
+				padding: 35px 0 0 0;
+				border-radius: 0;
+				color: white;
+				text-align: center;
+				background-color: rgba(0,0,0,0);
+			}
+
+			a:hover:not(.active), 
+			.active {
+				opacity: 1;
+			}
+
+			.active {
+				background-color: $blue_1;
+			}
+		}
+
+		$items: ('home','schedule','dashboard','tasks','charts','messages','reports','settings');
+		@for $i from 1 through length($items) {
+			.nav-pills>li:nth-of-type(#{length($items)}n+#{$i}) a {
+				background-image: url('images/icon_main_nav_'+nth($items, $i)+'.png') !important;
+			}
+		}
+
+		// .btn-group>/
+	}
+
+	#MainNavLegacy {
+		border-top: 1px solid $grey_1;
+		text-align: center;
+
+		a {
+			@include mainNavText;
+			color: $grey_1;
+		}
+
+		a:hover {
+			color: white;
+		}
+	}
+}
+
+#UtilityNav {
+	@extend .flex-row-end;
+	height: 30px;
+	background: $grey_2;
+	border-bottom: 1px solid #474747;
+
+	a, button {
+		@include utilityNavButton;
+	}
+
+	.nav-pills>li+li {
+		margin: 0;
+	}
+
+	.nav-pills>li {
+
+		border-right: 1px solid $grey_1;
+
+		.active {
+			background-color: $blue_1;
+			color: white !important;
+		}
+	}
+
+	.dropdown-menu {
+		li > a {
+			text-align: left;
+		}
+		
+		li:hover {
+			background: $grey_2;
+		}
+
+	}
+
+	.user-menu {
+		border-right: 1px solid $grey_1;
+		border-left: 1px solid $grey_1;
+	}
+
+
+
+}
+
+
+
+
+
+// // MEDIA QUERIES
+// // phone
+// @media (min-width: 0) and (max-width: 767px) {
+
+// }
+
+// // iPad portrait
+// @media (min-width: 768px) and (max-width: 991px) {
+
+// }
+
+// // iPad landscape & desktop
+// @media (min-width: 992px) and (max-width: 1139px) {
+// }
+
+// // right banner small
+// @media (min-width: 1140px) and (max-width: 1199px) {
+// 	#BannerRight .banner_small {
+// 		display: block;
+// 	}
+
+// 	#BannerRight .banner_large {
+// 		display: none;
+// 	}
+// }
+
+// // right banner large
+// @media (min-width: 1200px) {
+// 	#BannerRight .banner_small {
+// 		display: none;
+// 	}
+
+// 	#BannerRight .banner_large {
+// 		display: block;
+// 	}
+// }
+
+
+
+
+
+// MAIN CONTAINERS
+// #MainNavx {
+// 	position: absolute;
+// 	top: 0;
+// 	bottom: 0;
+// 	width: 80px;
+// 	background: black;
+// 	box-shadow: 4px 0 4px rgba(0,0,0,.2);
+
+// 	nav {
+// 		margin-top: 80px;
+
+// 		a {
+// 			display: block;
+// 			width: 80px;
+// 			height: 50px;
+// 			font-size: 12px;
+// 			color: #ccc !important;
+// 			text-align: center;
+
+// 			.active {
+// 				color: red !important;
+// 			}
+// 		}
+
+// 	}
+// }
+
+
+// #Mainx {
+// 	position: absolute;
+// 	top: 0;
+// 	right: 0;
+// 	left: 80px;
+// 	bottom: 0;
+
+// 	#UtilityNav {
+// 		height: 30px;
+// 		background: #333;
+// 		border-bottom: 1px solid #474747;
+// 		color: white;
+// 	}
+
+// 	#TabNav {
+// 		height: 30px;
+// 		background: #333;
+// 		color: red;
+// 	}
+// }

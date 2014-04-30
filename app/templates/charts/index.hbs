@@ -1,0 +1,18 @@
+<table class="m-rl-15">
+	<tr>
+		<th>PATIENT/TYPE</th>
+		<th>AGE/GENDER/DOB</th>
+		<th>LAST SEEN/MED ID</th>
+		<th>CC</th>
+		<th>APPT/STATUS</th>
+	</tr>
+	{{#each}}
+		{{#link-to 'chart.summary' this tagName='tr'}}
+			<td>{{patient.fullName}}</td>
+			<td>{{format-date patient.dob}}</td>
+			<td>yo</td>
+			<td>yo</td>
+			<td>yo</td>
+		{{/link-to}}
+	{{/each}}
+</table>
