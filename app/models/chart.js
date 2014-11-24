@@ -1,5 +1,5 @@
 var Chart = DS.Model.extend({
-	patient: DS.belongsTo('patient')
+	patient: DS.belongsTo('patient', {async:true})
 });
 
 Chart.FIXTURES = [
